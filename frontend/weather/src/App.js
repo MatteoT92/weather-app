@@ -48,6 +48,16 @@ function App(props) {
         document.getElementById('it').alt = 'Bandiera italiana';
         document.getElementById('gb').alt = '';
         document.getElementById('gb').alt = 'Bandiera britannica';
+        document.getElementById('sunny').alt = '';
+        document.getElementById('sunny').alt = 'Cielo soleggiato';
+        document.getElementById('cloudy').alt = '';
+        document.getElementById('cloudy').alt = 'Cielo nuvoloso';
+        document.getElementById('flash').alt = '';
+        document.getElementById('flash').alt = 'Temporali';
+        document.getElementById('rain').alt = '';
+        document.getElementById('rain').alt = 'Persona con ombrello sotto la pioggia';
+        document.getElementById('snow').alt = '';
+        document.getElementById('snow').alt = 'Paesaggio innevato';
         document.getElementById('country').placeholder = '';
         document.getElementById('country').placeholder = 'Paese/Città';
         break;
@@ -60,6 +70,16 @@ function App(props) {
         document.getElementById('it').alt = 'Italian flag';
         document.getElementById('gb').alt = '';
         document.getElementById('gb').alt = 'British flag';
+        document.getElementById('sunny').alt = '';
+        document.getElementById('sunny').alt = 'Sunny sky';
+        document.getElementById('cloudy').alt = '';
+        document.getElementById('cloudy').alt = 'Cloudy sky';
+        document.getElementById('flash').alt = '';
+        document.getElementById('flash').alt = 'Thundery';
+        document.getElementById('rain').alt = '';
+        document.getElementById('rain').alt = 'Person with umbrella in the rain';
+        document.getElementById('snow').alt = '';
+        document.getElementById('snow').alt = 'Snowy landscape';
         document.getElementById('country').placeholder = '';
         document.getElementById('country').placeholder = 'Country';
         break;
@@ -72,6 +92,16 @@ function App(props) {
         document.getElementById('it').alt = 'Bandiera italiana';
         document.getElementById('gb').alt = '';
         document.getElementById('gb').alt = 'Bandiera britannica';
+        document.getElementById('sunny').alt = '';
+        document.getElementById('sunny').alt = 'Cielo soleggiato';
+        document.getElementById('cloudy').alt = '';
+        document.getElementById('cloudy').alt = 'Cielo nuvoloso';
+        document.getElementById('flash').alt = '';
+        document.getElementById('flash').alt = 'Temporali';
+        document.getElementById('rain').alt = '';
+        document.getElementById('rain').alt = 'Persona con ombrello sotto la pioggia';
+        document.getElementById('snow').alt = '';
+        document.getElementById('snow').alt = 'Paesaggio innevato';
         document.getElementById('country').placeholder = '';
         document.getElementById('country').placeholder = 'Paese/Città';
     }
@@ -103,6 +133,13 @@ function App(props) {
               ENG
           </button>
         </div>
+      </div>
+      <div className="row weather-conditions">
+        <img src={process.env.PUBLIC_URL + '/sunny.jpg'} alt="Cielo soleggiato" id="sunny" />
+        <img src={process.env.PUBLIC_URL + '/cloudy.jpg'} alt="Cielo nuvoloso" id="cloudy" />
+        <img src={process.env.PUBLIC_URL + '/flash.jpg'} alt="Temporali" id="flash" />
+        <img src={process.env.PUBLIC_URL + '/rain.png'} alt="Persona con ombrello sotto la pioggia" id="rain" />
+        <img src={process.env.PUBLIC_URL + '/snow.jpg'} alt="Paesaggio innevato" id="snow" />
       </div>
       <div className="box-country">
         <input type="text" id="country" placeholder="Paese/Città" />

@@ -50,3 +50,12 @@ code {
   margin-left: 50px;
   margin-right: 50px;
 }
+
+.weather-conditions {
+  display: flex;
+  margin-top: 50px !important;
+}
+
+#sunny, #cloudy, #rain, #snow, #flash {
+  width: 20%;
+}
