@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import Meteo from './components/Meteo';
 
@@ -6,26 +6,75 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App(props) {
 
-  const api = require('./api-key.json');
+  const [language, setLanguage] = useState('ITA'); // imposta la lingua di default come italiano
+  const api = require('./api-key.json'); // ritorna il JSON contenete la chiave per accedere all'API di terze parti
 
   const weather = (e) => {
     e.preventDefault();
-    document.getElementById('weather').innerHTML = "";
-    let country = document.getElementById('country').value;
-    let key = api.key;
+    document.getElementById('weather').innerHTML = ""; // resetta il contenuto nel div con id weather
+    let country = document.getElementById('country').value; // ritorna il valore del paese/città cercata dall'utente
+    let key = api.key; // ritorna la chiave API
     let url = `http://api.weatherapi.com/v1/current.json?key=${key}&q=${country}&aqi=no`;
     fetch(url, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         }
-    }).then(response => response.json())
+    }).then(response => response.json()) // formatta il risultato in JSON
     .then(data => {
-      const weather = ReactDOM.createRoot(document.getElementById('weather'));
+      const weather = ReactDOM.createRoot(document.getElementById('weather')); // crea un root nel div con id weather
       weather.render(
-        <Meteo luogo={data["location"].name} regione={data["location"].region} stato={data["location"].country} latitudine={data["location"].lat} longitudine={data["location"].lon} data={data["location"].localtime} temperatura={data["current"].temp_c} condizione={data["current"]["condition"].text} icona={data["current"]["condition"].icon} />
-      );
+        <Meteo lingua={language} luogo={data["location"].name} regione={data["location"].region} stato={data["location"].country} latitudine={data["location"].lat} longitudine={data["location"].lon} data={data["location"].localtime} temperatura={data["current"].temp_c} condizione={data["current"]["condition"].text} icona={data["current"]["condition"].icon} />
+      ); // effettua la renderizzazione del componente Meteo con i dati meteorologici trovati
     });
+  }
+
+  const lang = (e) => {
+    let language = e.target.textContent; // ritorna il valore della lingua inerente il button cliccato
+    if (language === 'ITA') { // effettua dei controlli e imposta la lingua col valore ricavato dal button cliccato
+      setLanguage(prevValue => 'ITA');
+    } else if (language === 'ENG') {
+      setLanguage(prevValue => 'ENG');
+    } else {
+      setLanguage(prevValue => 'ITA');
+    }
+    switch (language) {
+      case 'ITA': // se la lingua è quella italiana imposta il valore dei seguenti elementi del DOM in italiano
+        document.getElementById('information').innerHTML = '';
+        document.getElementById('information').innerHTML = 'Seleziona un paese/città e riceverai le informazioni meteorologiche in tempo reale.';
+        document.getElementById('logo-image').alt = '';
+        document.getElementById('logo-image').alt = 'Situazioni meteorologiche';
+        document.getElementById('it').alt = '';
+        document.getElementById('it').alt = 'Bandiera italiana';
+        document.getElementById('gb').alt = '';
+        document.getElementById('gb').alt = 'Bandiera britannica';
+        document.getElementById('country').placeholder = '';
+        document.getElementById('country').placeholder = 'Paese/Città';
+        break;
+      case 'ENG': // se la lingua è quella inglese imposta il valore dei seguenti elementi del DOM in inglese
+        document.getElementById('information').innerHTML = '';
+        document.getElementById('information').innerHTML = 'Select a country and receive the weather information in real time.';
+        document.getElementById('logo-image').alt = '';
+        document.getElementById('logo-image').alt = 'Weather conditions';
+        document.getElementById('it').alt = '';
+        document.getElementById('it').alt = 'Italian flag';
+        document.getElementById('gb').alt = '';
+        document.getElementById('gb').alt = 'British flag';
+        document.getElementById('country').placeholder = '';
+        document.getElementById('country').placeholder = 'Country';
+        break;
+      default: // imposta di default gli elementi del DOM in lingua italiana
+        document.getElementById('information').innerHTML = '';
+        document.getElementById('information').innerHTML = 'Seleziona un paese/città e riceverai le informazioni meteorologiche in tempo reale.';
+        document.getElementById('logo-image').alt = '';
+        document.getElementById('logo-image').alt = 'Situazioni meteorologiche';
+        document.getElementById('it').alt = '';
+        document.getElementById('it').alt = 'Bandiera italiana';
+        document.getElementById('gb').alt = '';
+        document.getElementById('gb').alt = 'Bandiera britannica';
+        document.getElementById('country').placeholder = '';
+        document.getElementById('country').placeholder = 'Paese/Città';
+    }
   }
 
   return (
@@ -33,25 +82,25 @@ function App(props) {
       <div className="row header">
         <div className="logo col">
           <h1>
-            <img src={process.env.PUBLIC_URL + '/weather-icon.jpg'} alt="Situazioni meteorologiche" />
+            <img src={process.env.PUBLIC_URL + '/weather-icon.jpg'} alt="Situazioni meteorologiche" id="logo-image" />
             Weather App
           </h1>
         </div>
         <div className="col">
           <em>
-            <p>
+            <p id="information">
               Seleziona un paese/città e riceverai le informazioni meteorologiche in tempo reale.
             </p>
           </em>
         </div>
         <div className="col flags">
-          <button className="btn">
-            <img src={process.env.PUBLIC_URL + '/IT.svg'} alt="Bandiera italiana" />
+          <button className="btn" onClick={lang}>
+            <img src={process.env.PUBLIC_URL + '/IT.svg'} alt="Bandiera italiana" id="it" />
             ITA
           </button>
-          <button className="btn">
-          <img src={process.env.PUBLIC_URL + '/GB.svg'} alt="Bandiera britannica" />
-            ENG
+          <button className="btn" onClick={lang}>
+            <img src={process.env.PUBLIC_URL + '/GB.svg'} alt="Bandiera britannica" id="gb" />
+              ENG
           </button>
         </div>
       </div>
