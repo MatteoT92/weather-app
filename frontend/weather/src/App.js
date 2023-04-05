@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import Meteo from './components/Meteo';
 
@@ -7,37 +7,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function App(props) {
 
   const [language, setLanguage] = useState('ITA'); // imposta la lingua di default come italiano
-  const api = require('./api-key.json'); // ritorna il JSON contenete la chiave per accedere all'API di terze parti
 
-  const weather = (e) => {
-    e.preventDefault();
-    document.getElementById('weather').innerHTML = ""; // resetta il contenuto nel div con id weather
-    let country = document.getElementById('country').value; // ritorna il valore del paese/città cercata dall'utente
-    let key = api.key; // ritorna la chiave API
-    let url = `http://api.weatherapi.com/v1/current.json?key=${key}&q=${country}&aqi=no`;
-    fetch(url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }).then(response => response.json()) // formatta il risultato in JSON
-    .then(data => {
-      const weather = ReactDOM.createRoot(document.getElementById('weather')); // crea un root nel div con id weather
-      weather.render(
-        <Meteo lingua={language} luogo={data["location"].name} regione={data["location"].region} stato={data["location"].country} latitudine={data["location"].lat} longitudine={data["location"].lon} data={data["location"].localtime} temperatura={data["current"].temp_c} condizione={data["current"]["condition"].text} icona={data["current"]["condition"].icon} />
-      ); // effettua la renderizzazione del componente Meteo con i dati meteorologici trovati
-    });
-  }
-
-  const lang = (e) => {
-    let language = e.target.textContent; // ritorna il valore della lingua inerente il button cliccato
-    if (language === 'ITA') { // effettua dei controlli e imposta la lingua col valore ricavato dal button cliccato
-      setLanguage(prevValue => 'ITA');
-    } else if (language === 'ENG') {
-      setLanguage(prevValue => 'ENG');
-    } else {
-      setLanguage(prevValue => 'ITA');
-    }
+  useEffect(() => { // effettua il rendering e re-rendering in base allo stato della variabile language
     switch (language) {
       case 'ITA': // se la lingua è quella italiana imposta il valore dei seguenti elementi del DOM in italiano
         document.getElementById('information').innerHTML = '';
@@ -105,7 +76,29 @@ function App(props) {
         document.getElementById('country').placeholder = '';
         document.getElementById('country').placeholder = 'Paese/Città';
     }
-  }
+  });
+
+  const api = require('./api-key.json'); // ritorna il JSON contenete la chiave per accedere all'API di terze parti
+
+  const weather = (e) => {
+    e.preventDefault();
+    document.getElementById('weather').innerHTML = ""; // resetta il contenuto nel div con id weather
+    let country = document.getElementById('country').value; // ritorna il valore del paese/città cercata dall'utente
+    let key = api.key; // ritorna la chiave API
+    let url = `http://api.weatherapi.com/v1/current.json?key=${key}&q=${country}&aqi=no`;
+    fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(response => response.json()) // formatta il risultato in JSON
+    .then(data => {
+      const weather = ReactDOM.createRoot(document.getElementById('weather')); // crea un root nel div con id weather
+      weather.render(
+        <Meteo lingua={language} luogo={data["location"].name} regione={data["location"].region} stato={data["location"].country} latitudine={data["location"].lat} longitudine={data["location"].lon} data={data["location"].localtime} temperatura={data["current"].temp_c} condizione={data["current"]["condition"].text} icona={data["current"]["condition"].icon} />
+      ); // effettua la renderizzazione del componente Meteo con i dati meteorologici trovati
+    });
+  };
 
   return (
     <div className="container">
@@ -124,11 +117,11 @@ function App(props) {
           </em>
         </div>
         <div className="col flags">
-          <button className="btn" onClick={lang}>
+          <button className="btn" onClick={() => setLanguage(prevValue => 'ITA')}>
             <img src={process.env.PUBLIC_URL + '/IT.svg'} alt="Bandiera italiana" id="it" />
             ITA
           </button>
-          <button className="btn" onClick={lang}>
+          <button className="btn" onClick={() => setLanguage(prevValue => 'ENG')}>
             <img src={process.env.PUBLIC_URL + '/GB.svg'} alt="Bandiera britannica" id="gb" />
               ENG
           </button>
