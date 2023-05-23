@@ -1,6 +1,7 @@
 # Weather App
 
 Weather App è una web-app che ti consente di ricevere le condizioni meteorologiche in tempo reale.
+
 ## Tecnologie usate
 
 **Front-end:** React, Bootstrap
@@ -10,6 +11,7 @@ Weather App è una web-app che ti consente di ricevere le condizioni meteorologi
 **Database:** JSON
 
 **Version Control System:** Git
+
 ## Prerequisiti
 
 Aver installato i seguenti software:
@@ -81,9 +83,15 @@ Per testare la web-app occorre andare sul browser e digitare il seguente URL
   http://localhost:3000/
 ```
 
+## Riferimento API
 
-## Riferimenti API
-
-In questa web-app si sono usate API di terze parti fornite da Weather API.
+In questa web-app si sono usate API di terze parti fornite da **Weather API**.
 Esiste un piano gratuito che permette di effettuare parecchie chiamate.
 Per maggiori dettagli vi invito a visitare il [sito](https://www.weatherapi.com/) e/o il profilo [GitHub](https://github.com/weatherapicom/).
+
+## Autore:
+Matteo Tartaglione
+## 🔗 Links
+[![github](https://img.shields.io/github/followers/MatteoT92?style=for-the-badge&logo=github&logoColor=white)](https://github.com/MatteoT92)
+
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/matteotartaglione/)
